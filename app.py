@@ -1,11 +1,21 @@
-from clocks import AnalogClock
+from datetime import datetime
+
+from facades import ClockFacade
 
 
 def main() -> None:
-    clock = AnalogClock()
-    print("Исходный объект AnalogClock создан.")
-    print(f"Дата по умолчанию: {clock.get_year():04d}-{clock.get_month():02d}-{clock.get_day():02d}")
-    print("После выполнения задания клиентский код должен работать через ClockFacade.")
+    facade = ClockFacade()
+
+    facade.set_date_time(datetime.now())
+    print(f"Сейчас: {facade.get_date_time()}")
+    print(f"Форматировано: {facade.get_formatted()}")
+
+    facade.set_date_time(datetime(2026, 11, 12, 12, 0, 0))
+    print(f"Полдень: {facade.get_date_time()}")
+
+    print("История изменений:")
+    for item in facade.get_history():
+        print(f"  {item}")
 
 
 if __name__ == "__main__":
